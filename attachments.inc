@@ -23,10 +23,17 @@ enum AttachmentData
 {
 	att_modelid,
 	att_bone,
-	Float:att_offset[3],
-	Float:att_rot[3],
-	Float:att_scale[3],
-	att_color[2],
+	Float:att_offset_x,
+	Float:att_offset_y,
+	Float:att_offset_z,
+	Float:att_rot_x,
+	Float:att_rot_y,
+	Float:att_rot_z,
+	Float:att_scale_x,
+	Float:att_scale_y,
+	Float:att_scale_z,
+	att_color_1,
+	att_color_2,
 	bool:att_used
 };
 static gAttachment[MAX_PLAYERS][MAX_PLAYER_ATTACHED_OBJECTS][AttachmentData];
@@ -41,17 +48,17 @@ public OnPlayerSpawn(playerid)
 										i,
 										gAttachment[playerid][i][att_modelid],
 										gAttachment[playerid][i][att_bone],
-										gAttachment[playerid][i][att_offset][0],
-										gAttachment[playerid][i][att_offset][1],
-										gAttachment[playerid][i][att_offset][2],
-										gAttachment[playerid][i][att_rot][0],
-										gAttachment[playerid][i][att_rot][1],
-										gAttachment[playerid][i][att_rot][2],
-										gAttachment[playerid][i][att_scale][0],
-										gAttachment[playerid][i][att_scale][1],
-										gAttachment[playerid][i][att_scale][2],
-										gAttachment[playerid][i][att_color][0],
-										gAttachment[playerid][i][att_color][1]
+										gAttachment[playerid][i][att_offset_x],
+										gAttachment[playerid][i][att_offset_y],
+										gAttachment[playerid][i][att_offset_z],
+										gAttachment[playerid][i][att_rot_x],
+										gAttachment[playerid][i][att_rot_y],
+										gAttachment[playerid][i][att_rot_z],
+										gAttachment[playerid][i][att_scale_x],
+										gAttachment[playerid][i][att_scale_y],
+										gAttachment[playerid][i][att_scale_z],
+										gAttachment[playerid][i][att_color_1],
+										gAttachment[playerid][i][att_color_2]
 									);
 	    }
 	}
@@ -164,17 +171,17 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
 											i,
 											gAttachment[playerid][i][att_modelid],
 											gAttachment[playerid][i][att_bone],
-											gAttachment[playerid][i][att_offset][0],
-											gAttachment[playerid][i][att_offset][1],
-											gAttachment[playerid][i][att_offset][2],
-											gAttachment[playerid][i][att_rot][0],
-											gAttachment[playerid][i][att_rot][1],
-											gAttachment[playerid][i][att_rot][2],
-											gAttachment[playerid][i][att_scale][0],
-											gAttachment[playerid][i][att_scale][1],
-											gAttachment[playerid][i][att_scale][2],
-											gAttachment[playerid][i][att_color][0],
-											gAttachment[playerid][i][att_color][1]
+											gAttachment[playerid][i][att_offset_x],
+											gAttachment[playerid][i][att_offset_y],
+											gAttachment[playerid][i][att_offset_z],
+											gAttachment[playerid][i][att_rot_x],
+											gAttachment[playerid][i][att_rot_y],
+											gAttachment[playerid][i][att_rot_z],
+											gAttachment[playerid][i][att_scale_x],
+											gAttachment[playerid][i][att_scale_y],
+											gAttachment[playerid][i][att_scale_z],
+											gAttachment[playerid][i][att_color_1],
+											gAttachment[playerid][i][att_color_2]
 									);
 		    }
 		}
@@ -203,17 +210,17 @@ stock ATT_SetPlayerAttachedObject(playerid, index, modelid, bone, Float:fOffsetX
     	gAttachment[playerid][index][att_used] = true;
     	gAttachment[playerid][index][att_modelid] = modelid;
 		gAttachment[playerid][index][att_bone] = bone;
-		gAttachment[playerid][index][att_offset][0] = fOffsetX;
-		gAttachment[playerid][index][att_offset][1] = fOffsetY;
-		gAttachment[playerid][index][att_offset][2] = fOffsetZ;
-		gAttachment[playerid][index][att_rot][0] = fRotX;
-		gAttachment[playerid][index][att_rot][1] = fRotY;
-		gAttachment[playerid][index][att_rot][2] = fRotZ;
-		gAttachment[playerid][index][att_scale][0] = fScaleX;
-		gAttachment[playerid][index][att_scale][1] = fScaleY;
-		gAttachment[playerid][index][att_scale][2] = fScaleZ;
-		gAttachment[playerid][index][att_color][0] = materialcolor1;
-		gAttachment[playerid][index][att_color][1] = materialcolor2;
+		gAttachment[playerid][index][att_offset_x] = fOffsetX;
+		gAttachment[playerid][index][att_offset_y] = fOffsetY;
+		gAttachment[playerid][index][att_offset_z] = fOffsetZ;
+		gAttachment[playerid][index][att_rot_x] = fRotX;
+		gAttachment[playerid][index][att_rot_y] = fRotY;
+		gAttachment[playerid][index][att_rot_z] = fRotZ;
+		gAttachment[playerid][index][att_scale_x] = fScaleX;
+		gAttachment[playerid][index][att_scale_y] = fScaleY;
+		gAttachment[playerid][index][att_scale_z] = fScaleZ;
+		gAttachment[playerid][index][att_color_1] = materialcolor1;
+		gAttachment[playerid][index][att_color_2] = materialcolor2;
 		return true;
 	}
 	return false;
@@ -231,17 +238,17 @@ stock GetPlayerAttachedObject(playerid, index, &modelid, &bone, &Float:fOffsetX,
     {
         modelid = gAttachment[playerid][index][att_modelid];
         bone = gAttachment[playerid][index][att_bone];
-        fOffsetX = gAttachment[playerid][index][att_offset][0];
-        fOffsetY = gAttachment[playerid][index][att_offset][1];
-        fOffsetZ = gAttachment[playerid][index][att_offset][2];
-        fRotX = gAttachment[playerid][index][att_rot][0];
-        fRotY = gAttachment[playerid][index][att_rot][1];
-        fRotZ = gAttachment[playerid][index][att_rot][2];
-        fScaleX = gAttachment[playerid][index][att_scale][0];
-        fScaleY = gAttachment[playerid][index][att_scale][1];
-        fScaleZ = gAttachment[playerid][index][att_scale][2];
-        materialcolor1 = gAttachment[playerid][index][att_color][0];
-        materialcolor2 = gAttachment[playerid][index][att_color][1];
+        fOffsetX = gAttachment[playerid][index][att_offset_x];
+        fOffsetY = gAttachment[playerid][index][att_offset_y];
+        fOffsetZ = gAttachment[playerid][index][att_offset_z];
+        fRotX = gAttachment[playerid][index][att_rot_x];
+        fRotY = gAttachment[playerid][index][att_rot_y];
+        fRotZ = gAttachment[playerid][index][att_rot_z];
+        fScaleX = gAttachment[playerid][index][att_scale_x];
+        fScaleY = gAttachment[playerid][index][att_scale_y];
+        fScaleZ = gAttachment[playerid][index][att_scale_z];
+        materialcolor1 = gAttachment[playerid][index][att_color_1];
+        materialcolor2 = gAttachment[playerid][index][att_color_2];
         return true;
     }
 	return false;
