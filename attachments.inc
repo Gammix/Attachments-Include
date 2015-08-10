@@ -266,36 +266,6 @@ public OnPlayerKeyStateChange(playerid, newkeys, oldkeys)
     forward ATT_OnPlayerKeyStateChange(playerid, newkeys, oldkeys);
 #endif
 
-public OnPlayerEditAttachedObject(playerid, response, index, modelid, boneid, Float:fOffsetX, Float:fOffsetY, Float:fOffsetZ, Float:fRotX, Float:fRotY, Float:fRotZ, Float:fScaleX, Float:fScaleY, Float:fScaleZ)
-{
-	ATT_SetInt(playerid, index, att_modelid, modelid);
-	ATT_SetInt(playerid, index, att_bone, boneid);
-	ATT_SetFloat(playerid, index, att_offset_x, fOffsetX);
-	ATT_SetFloat(playerid, index, att_offset_y, fOffsetY);
-	ATT_SetFloat(playerid, index, att_offset_z, fOffsetZ);
-	ATT_SetFloat(playerid, index, att_rot_x, fRotX);
-	ATT_SetFloat(playerid, index, att_rot_y, fRotY);
-	ATT_SetFloat(playerid, index, att_rot_z, fRotZ);
-	ATT_SetFloat(playerid, index, att_scale_x, fScaleX);
-	ATT_SetFloat(playerid, index, att_scale_y, fScaleY);
-	ATT_SetFloat(playerid, index, att_scale_z, fScaleZ);
-
-    #if defined ATT_OnPlayerEditAttachedObject
-       	return ATT_OnPlayerEditAttachedObject(playerid, response, index, modelid, boneid, Float:fOffsetX, Float:fOffsetY, Float:fOffsetZ, Float:fRotX, Float:fRotY, Float:fRotZ, Float:fScaleX, Float:fScaleY, Float:fScaleZ);
-	#else
-	   	return 1;
-	#endif
-}
-#if defined _ALS_OnPlayerEditAttachedObject
-    #undef OnPlayerEditAttachedObject
-#else
-    #define _ALS_OnPlayerEditAttachedObject
-#endif
-#define OnPlayerEditAttachedObject ATT_OnPlayerEditAttachedObject
-#if defined ATT_OnPlayerEditAttachedObject
-    forward ATT_OnPlayerEditAttachedObject(playerid, response, index, modelid, boneid, Float:fOffsetX, Float:fOffsetY, Float:fOffsetZ, Float:fRotX, Float:fRotY, Float:fRotZ, Float:fScaleX, Float:fScaleY, Float:fScaleZ);
-#endif
-
 stock ATT_SetPlayerAttachedObject(playerid, index, modelid, bone, Float:fOffsetX = 0.0, Float:fOffsetY = 0.0, Float:fOffsetZ = 0.0, Float:fRotX = 0.0, Float:fRotY = 0.0, Float:fRotZ = 0.0, Float:fScaleX = 1.0, Float:fScaleY = 1.0, Float:fScaleZ = 1.0, materialcolor1 = 0, materialcolor2 = 0)
 {
 	if(SetPlayerAttachedObject(playerid, index, modelid, bone, fOffsetX, fOffsetY, fOffsetZ, fRotX, fRotY, fRotZ, fScaleX, fScaleY, fScaleZ, materialcolor1, materialcolor2))
@@ -328,21 +298,21 @@ stock ATT_SetPlayerAttachedObject(playerid, index, modelid, bone, Float:fOffsetX
 
 stock GetPlayerAttachedObject(playerid, index, &modelid, &bone, &Float:fOffsetX, &Float:fOffsetY, &Float:fOffsetZ, &Float:fRotX, &Float:fRotY, &Float:fRotZ, &Float:fScaleX, &Float:fScaleY, &Float:fScaleZ, &materialcolor1, &materialcolor2)
 {
-    if(gAttachment[playerid][index][att_used])
+    if(ATT_GetInt(playerid, index, att_used))
     {
-        modelid = ATT_GetInt(playerid, i, att_modelid);
-		bone = ATT_GetInt(playerid, i, att_bone);
-		fOffsetX = ATT_GetFloat(playerid, i, att_offset_x);
-		fOffsetY = ATT_GetFloat(playerid, i, att_offset_y);
-		fOffsetZ = ATT_GetFloat(playerid, i, att_offset_z);
-		fRotX = ATT_GetFloat(playerid, i, att_rot_x);
-		fRotY = ATT_GetFloat(playerid, i, att_rot_y);
-		fRotZ = ATT_GetFloat(playerid, i, att_rot_z);
-		fScaleX = ATT_GetFloat(playerid, i, att_scale_x);
-		fScaleY = ATT_GetFloat(playerid, i, att_scale_y);
-		fScaleZ = ATT_GetFloat(playerid, i, att_scale_z);
-		materialcolor1 = ATT_GetInt(playerid, i, att_color_1);
-		materialcolor2 = ATT_GetInt(playerid, i, att_color_2);
+        modelid = ATT_GetInt(playerid, index, att_modelid);
+		bone = ATT_GetInt(playerid, index, att_bone);
+		fOffsetX = ATT_GetFloat(playerid, index, att_offset_x);
+		fOffsetY = ATT_GetFloat(playerid, index, att_offset_y);
+		fOffsetZ = ATT_GetFloat(playerid, index, att_offset_z);
+		fRotX = ATT_GetFloat(playerid, index, att_rot_x);
+		fRotY = ATT_GetFloat(playerid, index, att_rot_y);
+		fRotZ = ATT_GetFloat(playerid, index, att_rot_z);
+		fScaleX = ATT_GetFloat(playerid, index, att_scale_x);
+		fScaleY = ATT_GetFloat(playerid, index, att_scale_y);
+		fScaleZ = ATT_GetFloat(playerid, index, att_scale_z);
+		materialcolor1 = ATT_GetInt(playerid, index, att_color_1);
+		materialcolor2 = ATT_GetInt(playerid, index, att_color_2);
         return true;
     }
 	return false;
